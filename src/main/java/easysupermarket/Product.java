@@ -6,25 +6,17 @@ public abstract class Product {
     private final double pricePerUnit;
     private double quantity;
 
-    private double totalPrice;
-
     public Product(int ID, String name, double pricePerUnity, double quantity) {
         this.ID = ID;
         this.name = name;
         this.pricePerUnit = pricePerUnity;
         this.quantity = quantity;
-
-        this.updatePrice();
     }
 
     //il db ha solo id - nome - tipologia - prezzo
 
-    private void updatePrice() {
-        this.setTotalPrice(this.quantity * this.pricePerUnit);
-    }
-
-    private void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
+    public double getTotalPrice() {
+        return this.quantity * this.pricePerUnit;
     }
 
     public int getID() {
@@ -45,7 +37,6 @@ public abstract class Product {
 
     public void setQuantity(double quantity) {
         this.quantity = quantity;
-        this.updatePrice();
     }
 
     @Override
