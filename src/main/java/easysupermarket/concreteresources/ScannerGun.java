@@ -1,4 +1,4 @@
-package org.example;
+package easysupermarket.concreteresources;
 
 public class ScannerGun {
     public ScannerGun() {

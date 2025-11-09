@@ -1,12 +1,18 @@
-package org.example;
+package easysupermarket;
+
+import dbmanager.ProductInterrogation;
+import dbmanager.ProductQuery;
 
 public class ProductFactory {
+    ProductInterrogation productInterrogation;
+
     public ProductFactory() {
+        productInterrogation = new ProductQuery();
     }
 
     public Product createProduct(int ID, double quantity, String typology) {
-        String name = getNameFromDB(ID);
-        double pricePerUnity = getPricePerUnityFromDB(ID);
+        String name = productInterrogation.getNameFromDB(ID);
+        double pricePerUnity = productInterrogation.getPricePerUnitFromDB(ID);
 
         return switch (typology.toLowerCase()) {
             case "unityproduct" -> {
@@ -20,13 +26,5 @@ public class ProductFactory {
             default -> throw new IllegalArgumentException("Product typology not supported");
         };
 
-    }
-
-    private String getNameFromDB(int ID) {
-        return "Stringa";
-    }
-
-    private double getPricePerUnityFromDB(int ID) {
-        return 1;
     }
 }

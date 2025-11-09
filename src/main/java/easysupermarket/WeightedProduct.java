@@ -1,4 +1,4 @@
-package org.example;
+package easysupermarket;
 
 public class WeightedProduct extends Product {
     public WeightedProduct(int ID, String name, double pricePerUnity, double quantity) {

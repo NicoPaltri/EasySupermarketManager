@@ -1,4 +1,4 @@
-package org.example;
+package easysupermarket;
 
 public class UnityProduct extends Product {
     public UnityProduct(int ID, String name, double pricePerUnity, double quantity) {

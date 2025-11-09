@@ -1,4 +1,9 @@
-package org.example;
+package easysupermarket;
+
+import dbmanager.ProductInterrogation;
+import dbmanager.ProductQuery;
+import easysupermarket.concreteresources.BarCode;
+import easysupermarket.concreteresources.ScannerGun;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,11 +13,13 @@ public class SupermarketManager {
     private final List<Product> productList;
     private final ScannerGun scannerGun;
     private final ProductFactory productFactory;
+    private final ProductInterrogation productInterrogation;
 
     public SupermarketManager() {
         this.scannerGun = new ScannerGun();
         this.productList = new ArrayList<>();
         this.productFactory = new ProductFactory();
+        this.productInterrogation = new ProductQuery();
     }
 
     public final void insertProductInMyList(BarCode barCode) throws Exception {
@@ -27,17 +34,17 @@ public class SupermarketManager {
             if (existingProduct instanceof UnityProduct unityProduct) {
                 unityProduct.setQuantity(unityProduct.getQuantity() + 1);
             } else if (existingProduct instanceof WeightedProduct weightedProduct) {
-                productList.add(new WeightedProduct(ID, weightedProduct.getName(), weightedProduct.getPricePerUnity(), quantity));
+                productList.add(new WeightedProduct(ID, weightedProduct.getName(), weightedProduct.getPricePerUnit(), quantity));
             } else {
                 throw new IllegalArgumentException("Product typology not supported");
             }
 
         } else {
-            if (!doMyProductExists(ID)) {
+            if (!productInterrogation.doMyProductExists(ID)) {
                 throw new IllegalArgumentException("The read product is not present in the DB");
             }
 
-            String typology = getTypologyFromDB(ID);
+            String typology = productInterrogation.getTypologyFromDB(ID);
 
             productList.add(productFactory.createProduct(ID, quantity, typology));
         }
@@ -90,13 +97,5 @@ public class SupermarketManager {
         }
 
         throw new IllegalArgumentException("Product typology not supported");
-    }
-
-    private boolean doMyProductExists(int ID) {
-        return true;
-    }
-
-    private String getTypologyFromDB(int ID) {
-        return "bau";
     }
 }

@@ -1,9 +1,9 @@
-package org.example;
+package easysupermarket;
 
 public abstract class Product {
     private final int ID;
     private final String name;
-    private final double pricePerUnity;
+    private final double pricePerUnit;
     private double quantity;
 
     private double totalPrice;
@@ -11,7 +11,7 @@ public abstract class Product {
     public Product(int ID, String name, double pricePerUnity, double quantity) {
         this.ID = ID;
         this.name = name;
-        this.pricePerUnity = pricePerUnity;
+        this.pricePerUnit = pricePerUnity;
         this.quantity = quantity;
 
         this.updatePrice();
@@ -20,7 +20,7 @@ public abstract class Product {
     //il db ha solo id - nome - tipologia - prezzo
 
     private void updatePrice() {
-        this.setTotalPrice(this.quantity * this.pricePerUnity);
+        this.setTotalPrice(this.quantity * this.pricePerUnit);
     }
 
     private void setTotalPrice(double totalPrice) {
@@ -35,8 +35,8 @@ public abstract class Product {
         return name;
     }
 
-    public double getPricePerUnity() {
-        return pricePerUnity;
+    public double getPricePerUnit() {
+        return pricePerUnit;
     }
 
     public double getQuantity() {
