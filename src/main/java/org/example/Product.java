@@ -1,9 +1,9 @@
 package org.example;
 
 public abstract class Product {
-    private int ID;
-    private String name;
-    private double pricePerUnity;
+    private final int ID;
+    private final String name;
+    private final double pricePerUnity;
     private double quantity;
 
     private double totalPrice;

@@ -2,7 +2,7 @@ package org.example;
 
 public class BarCode {
     private final int ID;
-    private final int quantity;
+    private final double quantity;
 
     public BarCode(int ID, int quantity) {
         this.ID = ID;
@@ -13,7 +13,7 @@ public class BarCode {
         return ID;
     }
 
-    public int getQuantity() {
+    public double getQuantity() {
         return quantity;
     }
 }

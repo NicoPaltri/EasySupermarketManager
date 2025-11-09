@@ -17,7 +17,7 @@ public class SupermarketManager {
 
     public final void insertProductInMyList(BarCode barCode) throws Exception {
         int ID = scannerGun.obtainIDFromBarcode(barCode);
-        double quantity = scannerGun.obtainQuantityFromBarcod(barCode);
+        double quantity = scannerGun.obtainQuantityFromBarcode(barCode);
 
         Optional<Product> product = isProductAlreadyInMyList(ID);
 
@@ -46,7 +46,7 @@ public class SupermarketManager {
 
     public final void deleteProductFromMyList(BarCode barCode) throws Exception {
         int ID = scannerGun.obtainIDFromBarcode(barCode);
-        double quantity = scannerGun.obtainQuantityFromBarcod(barCode);
+        double quantity = scannerGun.obtainQuantityFromBarcode(barCode);
 
         for (Product p : productList) {
             if (!productEqualsBarcode(p, ID, quantity)) {
@@ -55,7 +55,7 @@ public class SupermarketManager {
 
             if (p instanceof UnityProduct unityProduct) {
                 unityProduct.setQuantity(unityProduct.getQuantity() - 1);
-                if (unityProduct.getQuantity() == 0) {
+                if (Double.compare(unityProduct.getQuantity(), 0) == 0) {
                     productList.remove(unityProduct);
                 }
             } else if (p instanceof WeightedProduct weightedProduct) {
@@ -77,7 +77,19 @@ public class SupermarketManager {
     }
 
     private boolean productEqualsBarcode(Product product, int ID, double quantity) {
-        return product.getID() == ID && product.getQuantity() == quantity;
+        if (product.getID() != ID) {
+            return false;
+        }
+
+        if (product instanceof UnityProduct unityProduct) {
+            return true;
+        }
+
+        if (product instanceof WeightedProduct weightedProduct) {
+            return Double.compare(product.getQuantity(), quantity) == 0;
+        }
+
+        throw new IllegalArgumentException("Product typology not supported");
     }
 
     private boolean doMyProductExists(int ID) {

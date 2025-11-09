@@ -8,7 +8,7 @@ public class ScannerGun {
         return barCode.getID();
     }
 
-    public double obtainQuantityFromBarcod(BarCode barCode) {
+    public double obtainQuantityFromBarcode(BarCode barCode) {
         return barCode.getQuantity();
     }
 }
