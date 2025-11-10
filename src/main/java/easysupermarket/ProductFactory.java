@@ -1,13 +1,13 @@
 package easysupermarket;
 
 import dbmanager.ProductInterrogation;
-import dbmanager.ProductQuery;
+import dbmanager.ProductDBInterrogation;
 
 public class ProductFactory {
     ProductInterrogation productInterrogation;
 
     public ProductFactory() {
-        productInterrogation = new ProductQuery();
+        productInterrogation = new ProductDBInterrogation();
     }
 
     public Product createProduct(int ID, double quantity, String typology) {
@@ -20,9 +20,9 @@ public class ProductFactory {
                     throw new IllegalArgumentException("BarCode information error: double quantity for a unityProduct");
                 }
 
-                yield new UnityProduct(ID, name, pricePerUnity, quantity);
+                yield new UnityProduct(ID, quantity);
             }
-            case "weightedproduct" -> new WeightedProduct(ID, name, pricePerUnity, quantity);
+            case "weightedproduct" -> new WeightedProduct(ID, quantity);
             default -> throw new IllegalArgumentException("Product typology not supported");
         };
 

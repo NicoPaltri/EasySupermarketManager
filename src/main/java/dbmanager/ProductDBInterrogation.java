@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ProductQuery implements ProductInterrogation {
+public class ProductDBInterrogation implements ProductInterrogation {
     public boolean doMyProductExists(int ID) {
         String sql = "SELECT 1 FROM products WHERE id = ? LIMIT 1";
         try (Connection connection = DBConnection.getConnection();

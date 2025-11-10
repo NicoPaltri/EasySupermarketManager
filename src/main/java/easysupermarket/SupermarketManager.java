@@ -1,7 +1,7 @@
 package easysupermarket;
 
 import dbmanager.ProductInterrogation;
-import dbmanager.ProductQuery;
+import dbmanager.ProductDBInterrogation;
 import easysupermarket.concreteresources.BarCode;
 import easysupermarket.concreteresources.ScannerGun;
 
@@ -19,7 +19,7 @@ public class SupermarketManager {
         this.scannerGun = new ScannerGun();
         this.productList = new ArrayList<>();
         this.productFactory = new ProductFactory();
-        this.productInterrogation = new ProductQuery();
+        this.productInterrogation = new ProductDBInterrogation();
     }
 
     public final void insertProductInMyList(BarCode barCode) throws Exception {
@@ -34,7 +34,7 @@ public class SupermarketManager {
             if (existingProduct instanceof UnityProduct unityProduct) {
                 unityProduct.setQuantity(unityProduct.getQuantity() + 1);
             } else if (existingProduct instanceof WeightedProduct weightedProduct) {
-                productList.add(new WeightedProduct(ID, weightedProduct.getName(), weightedProduct.getPricePerUnit(), quantity));
+                productList.add(new WeightedProduct(ID, quantity));
             } else {
                 throw new IllegalArgumentException("Product typology not supported");
             }

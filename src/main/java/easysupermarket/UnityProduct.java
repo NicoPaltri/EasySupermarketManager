@@ -1,8 +1,8 @@
 package easysupermarket;
 
 public class UnityProduct extends Product {
-    public UnityProduct(int ID, String name, double pricePerUnity, double quantity) {
-        super(ID, name, pricePerUnity, quantity);
+    public UnityProduct(int ID, double quantity) {
+        super(ID, quantity);
     }
 
     @Override

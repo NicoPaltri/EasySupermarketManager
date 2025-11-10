@@ -1,18 +1,27 @@
 package easysupermarket;
 
+import dbmanager.ProductInterrogation;
+import dbmanager.ProductDBInterrogation;
+
 import java.util.Objects;
 
 public abstract class Product {
     private final int ID;
-    private final String name;
-    private final double pricePerUnit;
     private double quantity;
 
-    public Product(int ID, String name, double pricePerUnity, double quantity) {
+    ProductInterrogation productInterrogation;
+
+    private final String name;
+    private final double pricePerUnit;
+
+    public Product(int ID, double quantity) {
         this.ID = ID;
-        this.name = name;
-        this.pricePerUnit = pricePerUnity;
         this.quantity = quantity;
+
+        this.productInterrogation = new ProductDBInterrogation();
+
+        this.name = productInterrogation.getNameFromDB(ID);
+        this.pricePerUnit = productInterrogation.getPricePerUnitFromDB(ID);
     }
 
     //il db ha solo id - nome - tipologia - prezzo
@@ -41,11 +50,15 @@ public abstract class Product {
         this.quantity = quantity;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(ID, name, pricePerUnit, quantity);
+    public boolean haveTheSameQuantity(Product p2) {
+        return Double.compare(this.getQuantity(), p2.getQuantity()) == 0;
     }
 
     @Override
     public abstract boolean equals(Object o);
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ID, quantity);
+    }
 }
