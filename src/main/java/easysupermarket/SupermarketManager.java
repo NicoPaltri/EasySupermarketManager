@@ -6,6 +6,7 @@ import easysupermarket.concreteresources.BarCode;
 import easysupermarket.concreteresources.ScannerGun;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,7 +27,7 @@ public class SupermarketManager {
         int ID = scannerGun.obtainIDFromBarcode(barCode);
         double quantity = scannerGun.obtainQuantityFromBarcode(barCode);
 
-        Optional<Product> product = isProductAlreadyInMyList(ID);
+        Optional<Product> product = isAKindProductAlreadyInMyList(ID);
 
         if (product.isPresent()) {
             Product existingProduct = product.get();
@@ -55,32 +56,30 @@ public class SupermarketManager {
         int ID = scannerGun.obtainIDFromBarcode(barCode);
         double quantity = scannerGun.obtainQuantityFromBarcode(barCode);
 
-        for (Product p : productList) {
+        Iterator<Product> it = productList.iterator();
+        while (it.hasNext()) {
+            Product p = it.next();
+
             if (!productEqualsBarcode(p, ID, quantity)) {
                 continue;
             }
 
             if (p instanceof UnityProduct unityProduct) {
                 unityProduct.setQuantity(unityProduct.getQuantity() - 1);
-                if (Double.compare(unityProduct.getQuantity(), 0) == 0) {
-                    productList.remove(unityProduct);
+                if (unityProduct.getQuantity() <= 0) {
+                    it.remove();
                 }
-            } else if (p instanceof WeightedProduct weightedProduct) {
-                productList.remove(weightedProduct);
+            } else if (p instanceof WeightedProduct) {
+                it.remove();
             } else {
                 throw new IllegalArgumentException("Product typology not supported");
             }
         }
+
     }
 
-    private Optional<Product> isProductAlreadyInMyList(int ID) {
-        for (Product p : productList) {
-            if (p.getID() == ID) {
-                return Optional.of(p);
-            }
-        }
-
-        return Optional.empty();
+    private Optional<Product> isAKindProductAlreadyInMyList(int ID) {
+        return productList.stream().filter(p -> p.getID() == ID).findFirst();
     }
 
     private boolean productEqualsBarcode(Product product, int ID, double quantity) {
@@ -93,7 +92,7 @@ public class SupermarketManager {
         }
 
         if (product instanceof WeightedProduct weightedProduct) {
-            return Double.compare(product.getQuantity(), quantity) == 0;
+            return weightedProduct.haveTheSameQuantity(product);
         }
 
         throw new IllegalArgumentException("Product typology not supported");
