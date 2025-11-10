@@ -54,9 +54,9 @@ public class SupermarketManager {
         int ID = scannerGun.obtainIDFromBarcode(barCode);
         double quantity = scannerGun.obtainQuantityFromBarcode(barCode);
 
-        Iterator<Product> it = productList.iterator();
-        while (it.hasNext()) {
-            Product p = it.next();
+        Iterator<Product> removingProductIterator = productList.iterator();
+        while (removingProductIterator.hasNext()) {
+            Product p = removingProductIterator.next();
 
             if (!productEqualsBarcode(p, ID, quantity)) {
                 continue;
@@ -65,10 +65,10 @@ public class SupermarketManager {
             if (p instanceof UnitProduct unitProduct) {
                 unitProduct.setQuantity(unitProduct.getQuantity() - 1);
                 if (unitProduct.getQuantity() <= 0) {
-                    it.remove();
+                    removingProductIterator.remove();
                 }
             } else if (p instanceof WeightedProduct) {
-                it.remove();
+                removingProductIterator.remove();
             } else {
                 throw new IllegalArgumentException("Product typology not supported");
             }
