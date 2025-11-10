@@ -1,5 +1,7 @@
 package dbmanager;
 
+import easysupermarket.ProductTypology;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,14 +21,14 @@ public class ProductDBInterrogation implements ProductInterrogation {
         }
     }
 
-    public String getTypologyFromDB(int ID) {
+    public ProductTypology getTypologyFromDB(int ID) {
         String sql = "SELECT typology FROM products WHERE id = ? LIMIT 1";
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, ID);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    return rs.getString("typology");
+                    return ProductTypology.valueOf(rs.getString("typology"));
                 } else {
                     throw new IllegalArgumentException("Given an ID not checked before");
                 }

@@ -32,8 +32,8 @@ public class SupermarketManager {
         if (product.isPresent()) {
             Product existingProduct = product.get();
 
-            if (existingProduct instanceof UnityProduct unityProduct) {
-                unityProduct.setQuantity(unityProduct.getQuantity() + 1);
+            if (existingProduct instanceof UnitProduct unitProduct) {
+                unitProduct.setQuantity(unitProduct.getQuantity() + 1);
             } else if (existingProduct instanceof WeightedProduct weightedProduct) {
                 productList.add(new WeightedProduct(ID, quantity));
             } else {
@@ -45,9 +45,7 @@ public class SupermarketManager {
                 throw new IllegalArgumentException("The read product is not present in the DB");
             }
 
-            String typology = productInterrogation.getTypologyFromDB(ID);
-
-            productList.add(productFactory.createProduct(ID, quantity, typology));
+            productList.add(productFactory.createProduct(ID, quantity, productInterrogation.getTypologyFromDB(ID)));
         }
 
     }
@@ -64,9 +62,9 @@ public class SupermarketManager {
                 continue;
             }
 
-            if (p instanceof UnityProduct unityProduct) {
-                unityProduct.setQuantity(unityProduct.getQuantity() - 1);
-                if (unityProduct.getQuantity() <= 0) {
+            if (p instanceof UnitProduct unitProduct) {
+                unitProduct.setQuantity(unitProduct.getQuantity() - 1);
+                if (unitProduct.getQuantity() <= 0) {
                     it.remove();
                 }
             } else if (p instanceof WeightedProduct) {
@@ -87,7 +85,7 @@ public class SupermarketManager {
             return false;
         }
 
-        if (product instanceof UnityProduct unityProduct) {
+        if (product instanceof UnitProduct unitProduct) {
             return true;
         }
 

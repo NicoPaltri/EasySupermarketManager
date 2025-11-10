@@ -4,27 +4,27 @@ import dbmanager.ProductInterrogation;
 import dbmanager.ProductDBInterrogation;
 
 public class ProductFactory {
-    ProductInterrogation productInterrogation;
+    private final ProductInterrogation productInterrogation;
 
     public ProductFactory() {
         productInterrogation = new ProductDBInterrogation();
     }
 
-    public Product createProduct(int ID, double quantity, String typology) {
+    public Product createProduct(int ID, double quantity, ProductTypology typology) {
         String name = productInterrogation.getNameFromDB(ID);
         double pricePerUnity = productInterrogation.getPricePerUnitFromDB(ID);
 
-        return switch (typology.toLowerCase()) {
-            case "unityproduct" -> {
+        return switch (typology) {
+            case UNIT_PRODUCT -> {
                 if ((int) quantity != quantity) {
-                    throw new IllegalArgumentException("BarCode information error: double quantity for a unityProduct");
+                    throw new IllegalArgumentException(
+                            "Barcode error: double quantity for UnityProduct"
+                    );
                 }
-
-                yield new UnityProduct(ID, quantity);
+                yield new UnitProduct(ID, quantity);
             }
-            case "weightedproduct" -> new WeightedProduct(ID, quantity);
-            default -> throw new IllegalArgumentException("Product typology not supported");
-        };
 
+            case WEIGHTED_PRODUCT -> new WeightedProduct(ID, quantity);
+        };
     }
 }
