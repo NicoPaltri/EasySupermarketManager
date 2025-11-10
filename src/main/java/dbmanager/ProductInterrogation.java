@@ -5,9 +5,9 @@ import easysupermarket.ProductTypology;
 public interface ProductInterrogation {
     boolean doMyProductExists(int ID);
 
-    ProductTypology getTypologyFromDB(int ID);
+    ProductTypology getTypologyFromSource(int ID);
 
-    String getNameFromDB(int ID);
+    String getNameFromSource(int ID);
 
-    double getPricePerUnitFromDB(int ID);
+    double getPricePerUnitFromSource(int ID);
 }

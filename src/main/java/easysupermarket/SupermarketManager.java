@@ -1,7 +1,7 @@
 package easysupermarket;
 
 import dbmanager.ProductInterrogation;
-import dbmanager.ProductDBInterrogation;
+import dbmanager.DBProductInterrogation;
 import easysupermarket.concreteresources.BarCode;
 import easysupermarket.concreteresources.ScannerGun;
 
@@ -20,7 +20,7 @@ public class SupermarketManager {
         this.scannerGun = new ScannerGun();
         this.productList = new ArrayList<>();
         this.productFactory = new ProductFactory();
-        this.productInterrogation = new ProductDBInterrogation();
+        this.productInterrogation = new DBProductInterrogation();
     }
 
     public final void insertProductInMyList(BarCode barCode) throws Exception {
@@ -45,7 +45,7 @@ public class SupermarketManager {
                 throw new IllegalArgumentException("The read product is not present in the DB");
             }
 
-            productList.add(productFactory.createProduct(ID, quantity, productInterrogation.getTypologyFromDB(ID)));
+            productList.add(productFactory.createProduct(ID, quantity, productInterrogation.getTypologyFromSource(ID)));
         }
 
     }

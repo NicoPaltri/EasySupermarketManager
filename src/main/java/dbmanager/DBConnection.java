@@ -17,7 +17,7 @@ public final class DBConnection {
     }
 
     public static Connection getConnection() {
-        Connection conn = null;
+        Connection conn;
         try {
             Files.createDirectories(Paths.get(DB_FOLDER));
             conn = DriverManager.getConnection(URL);

@@ -1,19 +1,10 @@
 package easysupermarket;
 
-import dbmanager.ProductInterrogation;
-import dbmanager.ProductDBInterrogation;
-
 public class ProductFactory {
-    private final ProductInterrogation productInterrogation;
-
     public ProductFactory() {
-        productInterrogation = new ProductDBInterrogation();
     }
 
     public Product createProduct(int ID, double quantity, ProductTypology typology) {
-        String name = productInterrogation.getNameFromDB(ID);
-        double pricePerUnity = productInterrogation.getPricePerUnitFromDB(ID);
-
         return switch (typology) {
             case UNIT_PRODUCT -> {
                 if ((int) quantity != quantity) {

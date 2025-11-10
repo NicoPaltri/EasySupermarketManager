@@ -7,7 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ProductDBInterrogation implements ProductInterrogation {
+public class DBProductInterrogation implements ProductInterrogation {
     public boolean doMyProductExists(int ID) {
         String sql = "SELECT 1 FROM products WHERE id = ? LIMIT 1";
         try (Connection connection = DBConnection.getConnection();
@@ -21,7 +21,7 @@ public class ProductDBInterrogation implements ProductInterrogation {
         }
     }
 
-    public ProductTypology getTypologyFromDB(int ID) {
+    public ProductTypology getTypologyFromSource(int ID) {
         String sql = "SELECT typology FROM products WHERE id = ? LIMIT 1";
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -38,7 +38,7 @@ public class ProductDBInterrogation implements ProductInterrogation {
         }
     }
 
-    public String getNameFromDB(int ID) {
+    public String getNameFromSource(int ID) {
         String sql = "SELECT name FROM products WHERE id = ? LIMIT 1";
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -55,7 +55,7 @@ public class ProductDBInterrogation implements ProductInterrogation {
         }
     }
 
-    public double getPricePerUnitFromDB(int ID) {
+    public double getPricePerUnitFromSource(int ID) {
         String sql = "SELECT pricePerUnit FROM products WHERE id = ? LIMIT 1";
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {

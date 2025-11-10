@@ -1,7 +1,7 @@
 package easysupermarket;
 
 import dbmanager.ProductInterrogation;
-import dbmanager.ProductDBInterrogation;
+import dbmanager.DBProductInterrogation;
 
 import java.util.Objects;
 
@@ -18,10 +18,10 @@ public abstract class Product {
         this.ID = ID;
         this.quantity = quantity;
 
-        this.productInterrogation = new ProductDBInterrogation();
+        this.productInterrogation = new DBProductInterrogation();
 
-        this.name = productInterrogation.getNameFromDB(ID);
-        this.pricePerUnit = productInterrogation.getPricePerUnitFromDB(ID);
+        this.name = productInterrogation.getNameFromSource(ID);
+        this.pricePerUnit = productInterrogation.getPricePerUnitFromSource(ID);
     }
 
     //il db ha solo id - nome - tipologia - prezzo
