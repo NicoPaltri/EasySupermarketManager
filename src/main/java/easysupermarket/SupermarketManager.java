@@ -45,7 +45,7 @@ public class SupermarketManager {
                 throw new IllegalArgumentException("The read product is not present in the DB");
             }
 
-            productList.add(productFactory.createProduct(ID, quantity, productInterrogation.getTypologyFromSource(ID)));
+            productList.add(productFactory.createProduct(ID, quantity));
         }
 
     }
