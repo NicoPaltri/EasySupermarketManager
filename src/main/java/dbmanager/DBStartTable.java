@@ -16,7 +16,7 @@ public class DBStartTable {
                           id          INTEGER PRIMARY KEY,
                           name        TEXT NOT NULL,
                           pricePerUnit  REAL NOT NULL,
-                          typology        TEXT NOT NULL CHECK(type IN ('UNIT_PRODUCT','WEIGHTED_PRODUCT')),
+                          typology        TEXT NOT NULL CHECK(typology IN ('UNIT_PRODUCT','WEIGHTED_PRODUCT')),
                         );
                     """);
 
