@@ -41,7 +41,7 @@ public class SupermarketManager {
             }
 
         } else {
-            if (!productInterrogation.doMyProductExists(ID)) {
+            if (!productInterrogation.doesMyProductExists(ID)) {
                 throw new IllegalArgumentException("The read product is not present in the DB");
             }
 
