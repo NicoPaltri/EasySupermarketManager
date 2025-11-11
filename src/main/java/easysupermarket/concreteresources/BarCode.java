@@ -4,7 +4,7 @@ public class BarCode {
     private final int ID;
     private final double quantity;
 
-    public BarCode(int ID, int quantity) {
+    public BarCode(int ID, double quantity) {
         this.ID = ID;
         this.quantity = quantity;
     }

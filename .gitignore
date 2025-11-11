@@ -36,5 +36,3 @@ build/
 
 # database file
 data/*.db
-
-src/test/*

@@ -33,6 +33,11 @@ public class SupermarketManager {
             Product existingProduct = product.get();
 
             if (existingProduct instanceof UnitProduct unitProduct) {
+                if ((int) quantity != quantity) {
+                    throw new IllegalArgumentException(
+                            "Barcode error: double quantity for UnityProduct"
+                    );
+                }
                 unitProduct.setQuantity(unitProduct.getQuantity() + 1);
             } else if (existingProduct instanceof WeightedProduct weightedProduct) {
                 productList.add(new WeightedProduct(ID, quantity));
@@ -72,8 +77,11 @@ public class SupermarketManager {
             } else {
                 throw new IllegalArgumentException("Product typology not supported");
             }
+
+            return;
         }
 
+        throw new IllegalArgumentException("Read a BarCode which was not in the list");
     }
 
     private Optional<Product> isAKindProductAlreadyInMyList(int ID) {
@@ -90,9 +98,13 @@ public class SupermarketManager {
         }
 
         if (product instanceof WeightedProduct weightedProduct) {
-            return weightedProduct.haveTheSameQuantity(product);
+            return Double.compare(weightedProduct.getQuantity(), quantity) == 0;
         }
 
         throw new IllegalArgumentException("Product typology not supported");
+    }
+
+    public List<Product> getProductList() {
+        return productList;
     }
 }
