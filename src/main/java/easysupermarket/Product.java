@@ -86,8 +86,6 @@ public abstract class Product {
         return true;
     }
 
-    public
-
     @Override
     public abstract int hashCode();
 
