@@ -12,6 +12,10 @@ class SupermarketManagerTest {
     BarCode b1 = new BarCode(1, 1);
     BarCode b2 = new BarCode(1, 2);
 
+    BarCode illegalBarCode = new BarCode(3, 1);
+    BarCode illegalWeightedBarCode = new BarCode(1, 1.5);
+
+
     BarCode b3 = new BarCode(2, 2);
     BarCode b4 = new BarCode(2, 3);
 
@@ -24,11 +28,11 @@ class SupermarketManagerTest {
         });
 
         assertThrows(IllegalArgumentException.class, () -> {
-            supermarketManager.insertProductInMyList(b2);
+            supermarketManager.insertProductInMyList(illegalBarCode);
         });
 
         assertThrows(IllegalArgumentException.class, () -> {
-            supermarketManager.insertProductInMyList(b3);
+            supermarketManager.insertProductInMyList(illegalWeightedBarCode);
         });
     }
 
