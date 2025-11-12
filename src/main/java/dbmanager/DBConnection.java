@@ -10,10 +10,11 @@ import java.sql.Statement;
 
 public final class DBConnection {
     private static final String DB_FOLDER = "data";
-    private static final String DB_FILE   = "productDB.db";
-    private static final String URL       = "jdbc:sqlite:" + DB_FOLDER + "/" + DB_FILE;
+    private static final String DB_FILE = "productDB.db";
+    private static final String URL = "jdbc:sqlite:" + DB_FOLDER + "/" + DB_FILE;
 
-    private DBConnection() {} // evita istanziazione
+    private DBConnection() {
+    }
 
     public static Connection getConnection() {
         try {

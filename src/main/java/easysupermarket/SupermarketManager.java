@@ -60,7 +60,7 @@ public class SupermarketManager {
         while (removingProductIterator.hasNext()) {
             Product p = removingProductIterator.next();
 
-            if (!productEqualsBarcode(p, ID, quantity)) {
+            if (!p.equalsBarCode(ID, quantity)) {
                 continue;
             }
 
@@ -83,22 +83,6 @@ public class SupermarketManager {
 
     private Optional<Product> isAKindProductAlreadyInMyList(int ID) {
         return productList.stream().filter(p -> p.getID() == ID).findFirst();
-    }
-
-    private boolean productEqualsBarcode(Product product, int ID, double quantity) {
-        if (product.getID() != ID) {
-            return false;
-        }
-
-        if (product instanceof UnitProduct unitProduct) {
-            return true;
-        }
-
-        if (product instanceof WeightedProduct weightedProduct) {
-            return Double.compare(weightedProduct.getQuantity(), quantity) == 0;
-        }
-
-        throw new IllegalArgumentException("Product typology not supported");
     }
 
     public List<Product> getProductList() {

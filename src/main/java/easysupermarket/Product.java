@@ -3,6 +3,8 @@ package easysupermarket;
 import dbmanager.ProductInterrogation;
 import dbmanager.DBProductInterrogation;
 
+import java.util.Objects;
+
 public abstract class Product {
     private final int ID;
     private double quantity;
@@ -22,7 +24,7 @@ public abstract class Product {
         this.pricePerUnit = productInterrogation.getPricePerUnitFromSource(ID);
     }
 
-    //il db ha solo id - nome - tipologia - prezzo
+    //The DB contains: id - name - pricePerUnit - typology
 
     public double getTotalPrice() {
         return this.getQuantity() * this.getPricePerUnit();
@@ -30,10 +32,6 @@ public abstract class Product {
 
     public int getID() {
         return ID;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public double getPricePerUnit() {
@@ -54,7 +52,8 @@ public abstract class Product {
 
     @Override
     public final boolean equals(Object o) {
-        if (o == null || this.getClass() != o.getClass()) {
+
+        if (!equalsClass(o)) {
             return false;
         }
 
@@ -65,16 +64,36 @@ public abstract class Product {
         return specificEquals((Product) o);
     }
 
+    public boolean equalsBarCode(int id, double quantity) {
+        if (this.getID() != id) {
+            return false;
+        }
+
+        if (this instanceof UnitProduct unitProduct) {
+            return true;
+        } else if (this instanceof WeightedProduct weightedProduct) {
+            return Double.compare(weightedProduct.getQuantity(), quantity) == 0;
+        }
+
+        throw new IllegalArgumentException("Product typology not supported");
+    }
+
+    private boolean equalsClass(Object o) {
+        return o != null && this.getClass() == o.getClass();
+    }
+
     protected boolean specificEquals(Product product) {
         return true;
     }
+
+    public
 
     @Override
     public abstract int hashCode();
 
     @Override
     public String toString() {
-        return "Product: ID" + ID +
+        return "Product: ID " + ID +
                 " [ name='" + name +
                 ", pricePerUnit=" + pricePerUnit +
                 ", quantity=" + quantity +
