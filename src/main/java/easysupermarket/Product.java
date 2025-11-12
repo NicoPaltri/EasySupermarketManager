@@ -61,4 +61,13 @@ public abstract class Product {
     public int hashCode() {
         return Objects.hash(ID, quantity);
     }
+
+    @Override
+    public String toString() {
+        return "Product: ID" + ID +
+                " [ name='" + name +
+                ", pricePerUnit=" + pricePerUnit +
+                ", quantity=" + quantity +
+                " ]";
+    }
 }
