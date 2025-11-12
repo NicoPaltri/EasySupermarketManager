@@ -1,13 +1,18 @@
 package easysupermarket;
 
+import java.util.Objects;
+
 public class UnitProduct extends Product {
     public UnitProduct(int ID, double quantity) {
         super(ID, quantity);
     }
 
+    public boolean hasIntegerQuantity() {
+        return (int) this.getQuantity() == this.getQuantity();
+    }
+
     @Override
-    public boolean equals(Object o) {
-        if (o == null || this.getClass() != o.getClass()) return false;
-        return this.getID() == ((UnitProduct) o).getID();
+    public int hashCode() {
+        return Objects.hash(this.getID());
     }
 }

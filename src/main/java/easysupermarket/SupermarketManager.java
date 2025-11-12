@@ -23,7 +23,7 @@ public class SupermarketManager {
         this.productInterrogation = new DBProductInterrogation();
     }
 
-    public final void insertProductInMyList(BarCode barCode) throws Exception {
+    public void insertProductInMyList(BarCode barCode) {
         int ID = scannerGun.obtainIDFromBarcode(barCode);
         double quantity = scannerGun.obtainQuantityFromBarcode(barCode);
 
@@ -33,10 +33,8 @@ public class SupermarketManager {
             Product existingProduct = product.get();
 
             if (existingProduct instanceof UnitProduct unitProduct) {
-                if ((int) quantity != quantity) {
-                    throw new IllegalArgumentException(
-                            "Barcode error: double quantity for UnityProduct"
-                    );
+                if (!unitProduct.hasIntegerQuantity()) {
+                    throw new IllegalArgumentException("Barcode error: double quantity for UnityProduct");
                 }
                 unitProduct.setQuantity(unitProduct.getQuantity() + 1);
             } else if (existingProduct instanceof WeightedProduct weightedProduct) {
@@ -52,10 +50,9 @@ public class SupermarketManager {
 
             productList.add(productFactory.createProduct(ID, quantity));
         }
-
     }
 
-    public final void deleteProductFromMyList(BarCode barCode) throws Exception {
+    public void deleteProductFromMyList(BarCode barCode) {
         int ID = scannerGun.obtainIDFromBarcode(barCode);
         double quantity = scannerGun.obtainQuantityFromBarcode(barCode);
 
