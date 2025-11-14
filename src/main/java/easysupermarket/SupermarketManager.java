@@ -36,9 +36,9 @@ public class SupermarketManager {
                 if (!UnitProduct.hasIntegerQuantity(quantity)) {
                     throw new IllegalArgumentException("Barcode error: double quantity for UnityProduct");
                 }
-                unitProduct.setQuantity(unitProduct.getQuantity() + 1);
+                unitProduct.setQuantity(unitProduct.getQuantity() + quantity);
             } else if (existingProduct instanceof WeightedProduct weightedProduct) {
-                productList.add(new WeightedProduct(ID, quantity));
+                productList.add(new WeightedProduct(ID, quantity, weightedProduct.getName(), weightedProduct.getPricePerUnit()));
             } else {
                 throw new IllegalArgumentException("Product typology not supported");
             }

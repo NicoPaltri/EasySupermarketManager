@@ -3,8 +3,8 @@ package easysupermarket;
 import java.util.Objects;
 
 public class WeightedProduct extends Product {
-    public WeightedProduct(int ID, double quantity) {
-        super(ID, quantity);
+    public WeightedProduct(int ID, double quantity, String name, double pricePerUnit) {
+        super(ID, quantity, name, pricePerUnit);
     }
 
     @Override

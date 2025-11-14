@@ -3,8 +3,8 @@ package easysupermarket;
 import java.util.Objects;
 
 public class UnitProduct extends Product {
-    public UnitProduct(int ID, double quantity) {
-        super(ID, quantity);
+    public UnitProduct(int ID, double quantity, String name, double pricePerUnit) {
+        super(ID, quantity, name, pricePerUnit);
     }
 
     public boolean hasIntegerQuantity() {

@@ -1,27 +1,16 @@
 package easysupermarket;
 
-import dbmanager.ProductInterrogation;
-import dbmanager.DBProductInterrogation;
-
-import java.util.Objects;
-
 public abstract class Product {
     private final int ID;
     private double quantity;
-
-    ProductInterrogation productInterrogation;
-
     private final String name;
     private final double pricePerUnit;
 
-    public Product(int ID, double quantity) {
+    public Product(int ID, double quantity, String name, double pricePerUnit) {
         this.ID = ID;
         this.quantity = quantity;
-
-        this.productInterrogation = new DBProductInterrogation();
-
-        this.name = productInterrogation.getNameFromSource(ID);
-        this.pricePerUnit = productInterrogation.getPricePerUnitFromSource(ID);
+        this.name = name;
+        this.pricePerUnit = pricePerUnit;
     }
 
     //The DB contains: id - name - pricePerUnit - typology
@@ -32,6 +21,10 @@ public abstract class Product {
 
     public int getID() {
         return ID;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public double getPricePerUnit() {
@@ -52,7 +45,6 @@ public abstract class Product {
 
     @Override
     public final boolean equals(Object o) {
-
         if (!equalsClass(o)) {
             return false;
         }

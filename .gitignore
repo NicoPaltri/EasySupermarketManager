@@ -36,3 +36,6 @@ build/
 
 # database file
 data/*.db
+
+#main
+*Simulator.java
