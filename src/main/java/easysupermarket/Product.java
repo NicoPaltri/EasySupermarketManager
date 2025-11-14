@@ -45,7 +45,7 @@ public abstract class Product {
 
     @Override
     public final boolean equals(Object o) {
-        if (!equalsClass(o)) {
+        if (o == null || this.getClass() != o.getClass()) {
             return false;
         }
 
@@ -70,10 +70,6 @@ public abstract class Product {
         }
 
         throw new IllegalArgumentException("Product typology not supported");
-    }
-
-    private boolean equalsClass(Object o) {
-        return o != null && this.getClass() == o.getClass();
     }
 
     protected boolean specificEquals(Product product) {
