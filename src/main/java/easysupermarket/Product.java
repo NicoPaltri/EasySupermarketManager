@@ -62,11 +62,10 @@ public abstract class Product {
         }
 
         if (this instanceof UnitProduct unitProduct) {
-            if (!unitProduct.hasIntegerQuantity()) {
-                throw new IllegalArgumentException("Barcode error: double quantity for UnityProduct");
-            }
             return true;
-        } else if (this instanceof WeightedProduct weightedProduct) {
+        }
+
+        if (this instanceof WeightedProduct weightedProduct) {
             return Double.compare(weightedProduct.getQuantity(), quantity) == 0;
         }
 

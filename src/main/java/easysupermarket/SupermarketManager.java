@@ -1,7 +1,5 @@
 package easysupermarket;
 
-import dbmanager.ProductInterrogation;
-import dbmanager.DBProductInterrogation;
 import easysupermarket.concreteresources.BarCode;
 import easysupermarket.concreteresources.ScannerGun;
 
@@ -14,13 +12,11 @@ public class SupermarketManager {
     private final List<Product> productList;
     private final ScannerGun scannerGun;
     private final ProductFactory productFactory;
-    private final ProductInterrogation productInterrogation;
 
     public SupermarketManager() {
         this.scannerGun = new ScannerGun();
         this.productList = new ArrayList<>();
         this.productFactory = new ProductFactory();
-        this.productInterrogation = new DBProductInterrogation();
     }
 
     public void insertProductInMyList(BarCode barCode) {
@@ -37,17 +33,18 @@ public class SupermarketManager {
                     throw new IllegalArgumentException("Barcode error: double quantity for UnityProduct");
                 }
                 unitProduct.setQuantity(unitProduct.getQuantity() + quantity);
-            } else if (existingProduct instanceof WeightedProduct weightedProduct) {
-                productList.add(new WeightedProduct(ID, quantity, weightedProduct.getName(), weightedProduct.getPricePerUnit()));
-            } else {
-                throw new IllegalArgumentException("Product typology not supported");
+
+                return;
             }
 
+            if (existingProduct instanceof WeightedProduct weightedProduct) {
+                productList.add(productFactory.createProduct(ID, quantity, weightedProduct.getName(), weightedProduct.getPricePerUnit(), ProductTypology.WEIGHTED_PRODUCT));
+
+                return;
+            }
+
+            throw new IllegalArgumentException("Product typology not supported");
         } else {
-            if (!productInterrogation.doesMyProductExists(ID)) {
-                throw new IllegalArgumentException("The read product is not present in the DB");
-            }
-
             productList.add(productFactory.createProduct(ID, quantity));
         }
     }
@@ -65,21 +62,26 @@ public class SupermarketManager {
             }
 
             if (p instanceof UnitProduct unitProduct) {
-                unitProduct.setQuantity(unitProduct.getQuantity() - 1);
+                unitProduct.setQuantity(unitProduct.getQuantity() - quantity);
                 if (unitProduct.getQuantity() <= 0) {
                     removingProductIterator.remove();
                 }
-            } else if (p instanceof WeightedProduct) {
-                removingProductIterator.remove();
-            } else {
-                throw new IllegalArgumentException("Product typology not supported");
+
+                return;
             }
 
-            return;
+            if (p instanceof WeightedProduct) {
+                removingProductIterator.remove();
+
+                return;
+            }
+
+            throw new IllegalArgumentException("Product typology not supported");
         }
 
         throw new IllegalArgumentException("Read a BarCode which was not in the list");
     }
+
 
     private Optional<Product> isAKindProductAlreadyInMyList(int ID) {
         return productList.stream().filter(p -> p.getID() == ID).findFirst();
