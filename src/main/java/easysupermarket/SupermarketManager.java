@@ -33,7 +33,7 @@ public class SupermarketManager {
             Product existingProduct = product.get();
 
             if (existingProduct instanceof UnitProduct unitProduct) {
-                if ((int) quantity != quantity) {
+                if (!UnitProduct.hasIntegerQuantity(quantity)) {
                     throw new IllegalArgumentException("Barcode error: double quantity for UnityProduct");
                 }
                 unitProduct.setQuantity(unitProduct.getQuantity() + 1);

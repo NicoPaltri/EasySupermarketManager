@@ -15,7 +15,7 @@ public class ProductFactory {
 
         return switch (typology) {
             case UNIT_PRODUCT -> {
-                if ((int) quantity != quantity) {
+                if (!UnitProduct.hasIntegerQuantity(quantity)) {
                     throw new IllegalArgumentException(
                             "Barcode error: double quantity for UnityProduct"
                     );

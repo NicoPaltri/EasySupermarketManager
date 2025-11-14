@@ -11,6 +11,10 @@ public class UnitProduct extends Product {
         return (int) this.getQuantity() == this.getQuantity();
     }
 
+    public static boolean hasIntegerQuantity(double quantity) {
+        return (int) quantity == quantity;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(this.getID());
