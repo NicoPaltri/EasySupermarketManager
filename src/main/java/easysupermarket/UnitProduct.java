@@ -8,7 +8,7 @@ public class UnitProduct extends Product {
     }
 
     public boolean hasIntegerQuantity() {
-        return (int) this.getQuantity() == this.getQuantity();
+        return hasIntegerQuantity(this.getQuantity());
     }
 
     public static boolean hasIntegerQuantity(double quantity) {
